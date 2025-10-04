@@ -7,15 +7,15 @@
 }
 
 /*----------Color Definitions----------*/
-@define-color fg #C3C6C6;
-@define-color bg #121C1C;
-@define-color color1 #8C706F;
-@define-color color2 #695453;
-@define-color color3 #5D7171;
-@define-color color4 #909B9B;
-@define-color color5 #556654;
-@define-color color6 #728970;
-@define-color color7 #727A83;
+@define-color fg #C4C6CB;
+@define-color bg #141D2F;
+@define-color color1 #962D00;
+@define-color color2 #C93C00;
+@define-color color3 #CC4C01;
+@define-color color4 #DB6F01;
+@define-color color5 #004A6E;
+@define-color color6 #335F75;
+@define-color color7 #636B79;
 /*-------------------------------------*/
 
 window#waybar {

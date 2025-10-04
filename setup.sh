@@ -18,12 +18,6 @@ paru -S --needed --noconfirm \
   colorz \
   brave \
   proton-authenticator-bin \
-  sassc \
-  bc \
-  optipng \
-  gtk-engine-murrine \
-  meson \
-  breeze-icons \
   code \
 	nemo \
 	nwg-look \
@@ -61,15 +55,13 @@ paru -S --needed --noconfirm \
 
 #-----Flatpaks-----#
 
-#echo "Installing FlatPaks....."
-#sleep 3
-flatpak install --noninteractive flathub com.bitwarden.desktop 
+echo "Installing FlatPaks....."
+sleep 3
 flatpak install --noninteractive flathub org.audacityteam.Audacity 
 flatpak install --noninteractive flathub org.libretro.RetroArch
 flatpak install --noninteractive flathub net.rpcs3.RPCS3
 flatpak install --noninteractive flathub org.localsend.localsend_app
 flatpak install --noninteractive flathub com.github.tchx84.Flatseal
-flatpak install --noninteractive flathub org.localsend.localsend_app
 
 
 #-----Create-Directories-----#
@@ -173,23 +165,6 @@ cd ~/git/
 git clone https://github.com/vinceliuice/Elegant-grub2-themes.git
 cd Elegant-grub2-themes/
 ./install.sh
-
-#-----Monitors-Config-----#
-echo "Configuring Monitors"
-
-# Get primary monitor (usually first one)
-primary_monitor=$(hyprctl monitors -j | jq -r '.[0] | "\(.name),\(.width)x\(.height)@\(.refreshRate),auto,1"')
-
-# Replace line 5 with primary monitor
-sed -i "5s/.*/monitor=$primary_monitor/" ~/.config/hypr/monitors.conf
-
-# Optional: Add other monitors as commented lines
-hyprctl monitors -j | jq -r '.[1:] | .[] | "\(.name),\(.width)x\(.height)@\(.refreshRate),auto,1"' | \
-while read -r monitor; do
-    if ! grep -q "$monitor" ~/.config/hypr/monitors.conf; then
-        echo "# monitor=$monitor" >> ~/.config/hypr/monitors.conf
-    fi
-done
 
 echo "Installation Complete !!!"
 echo "Rebooting The System"
