@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=oomox-lamborghini
+Comment=Generated with Themix Base16 plugin
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=oomox-lamborghini
+GtkTheme=oomox-lamborghini
+IconTheme=oomox-lamborghini
+MetacityTheme=oomox-lamborghini

@@ -1,0 +1,17 @@
+{
+    "anime-room.jpg": {
+        "gtk_theme": "oomox-anime_room",
+        "icon_theme": "oomox-anime_room",
+        "gtk4_theme": "oomox-anime_room"
+    },
+    "mountain.jpg": {
+        "gtk_theme": "oomox-mountain",
+        "icon_theme": "oomox-mountain",
+        "gtk4_theme": "oomox-mountain"
+    },
+    "sunset.jpg": {
+        "gtk_theme": "oomox-sunset",
+        "icon_theme": "oomox-sunset",
+        "gtk4_theme": "oomox-sunset"
+    }
+}

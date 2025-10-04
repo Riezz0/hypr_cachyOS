@@ -1,0 +1,209 @@
+@import "colors.css";
+
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: MesloLGL Nerd Font Propo;
+    font-size: 13px;
+}
+
+/*----------Color Definitions----------*/
+@define-color fg #C1C2C4;
+@define-color bg #090B15;
+@define-color color1 #614D93;
+@define-color color2 #981C71;
+@define-color color3 #CA4AA7;
+@define-color color4 #EA58B4;
+@define-color color5 #096B94;
+@define-color color6 #29ACCC;
+@define-color color7 #585B6C;
+/*-------------------------------------*/
+
+window#waybar {
+    background-color: transparent;
+    border-bottom: transparent;
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#custom-arch {
+  background-color: @bg;
+  color: @color5;
+  padding-top: 0.3px;
+  padding-bottom: 0px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#workspaces {
+    border-radius: 5px;
+    background-color: @bg;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+#workspaces button {
+  background-color: transparent;
+  color: @color2; 
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+#workspaces button.active {
+  background-color: transparent;
+  color: @color5; 
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+#workspaces button.urgent {
+  background-color: transparent;
+  color: @color1; 
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+#workspaces button:hover {
+    color: @cursor;
+  }
+
+#custom-salaat {
+  background-color: @bg;
+  color: @color1;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#custom-quran {
+  background-color: @bg;
+  color: @color5;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#custom-sunnah {
+  background-color: @bg;
+  color: @color5;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 6px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#custom-aur {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#custom-gpu {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+#custom-cpu {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+#pulseaudio {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+#pulseaudio.muted {
+  background-color: @bg;
+  color: @color1;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+#network {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+
+}
+
+#network.disconnected {
+  background-color: @bg;
+  color: @color1;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+
+}
+
+#clock {
+  background-color: @bg;
+  color: @color3;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+#tray {
+    background-color: @bg;
+    border-radius: 5px; 
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#custom-power {
+  background-color: @bg;
+  color: @color5;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
