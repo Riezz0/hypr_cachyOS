@@ -128,6 +128,8 @@ sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
 echo "Applying Theme"
 sleep 3
 cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
+cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hyprer/colors.conf
+cp -r /home/$USER/.config/rofi/themes/cachydepths5k.rasi /home/$USER/.config/rofi/launcher/colors.rasi
 gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
 gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -139,7 +141,7 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
-waybar 2>/dev/nul & 
+waybar 2>/dev/null & 
 
 #-----Instal-SDDM-Theme-----#
 echo "Install SDDM Themes"
