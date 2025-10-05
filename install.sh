@@ -30,8 +30,8 @@ show_banner() {
     clear
     echo -e "${PURPLE}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║               ${CYAN}SYSTEM INSTALLER${PURPLE}               ║"
-    echo "║           ${YELLOW}Hyprland Desktop Setup${PURPLE}           ║"
+    echo "║                   ${CYAN}SYSTEM INSTALLER${PURPLE}                     ║"
+    echo "║                 ${YELLOW}Hyprland Desktop Setup${PURPLE}               ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
 }
@@ -116,7 +116,7 @@ system_update() {
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
     print_status "Updating system packages..."
     
-    if paru -Syyu --noconfirm; then
+    if paru -Syyu --noconfirm &>/dev/null; then
         print_success "System updated successfully!"
     else
         print_error "Failed to update system!"
@@ -130,7 +130,7 @@ aur_installation() {
     show_banner
     echo -e "${CYAN}${DOWNLOAD} INSTALLING AUR PACKAGES${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
-    print_status "Installing AUR packages..."
+    print_status "Installing AUR packages (this may take a while)..."
     
     if paru -S --needed --noconfirm \
       swww \
@@ -174,7 +174,7 @@ aur_installation() {
       goverlay-git \
       flatpak \
       python-pywal16 \
-      python-pywalfox; then
+      python-pywalfox &>/dev/null; then
         print_success "AUR packages installed successfully!"
     else
         print_error "Some AUR packages failed to install!"
@@ -225,7 +225,7 @@ final_update() {
     echo -e "${CYAN}${HOURGLASS} FINAL SYSTEM CHECK${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
     print_status "Checking for updates on newly installed packages..."
-    if paru -Syyu --noconfirm; then
+    if paru -Syyu --noconfirm &>/dev/null; then
         print_success "System is up to date!"
     else
         print_warning "Some updates may have failed"
@@ -243,29 +243,32 @@ install_oh_my_zsh() {
     # KEEPING YOUR ORIGINAL CODE
     mkdir -p /home/$USER/dots/omz
 
-    git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "/home/$USER/dots/omz/zsh-autosuggestions/"
-    git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USER/dots/omz/zsh-syntax-highlighting/"
-    git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/omz/fast-syntax-highlighting/"
-    git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/omz/zsh-autocomplete/"
-    git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/omz/autoswitch_virtualenv/"
+    print_status "Cloning Zsh plugins..."
+    git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "/home/$USER/dots/omz/zsh-autosuggestions/" &>/dev/null
+    git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USER/dots/omz/zsh-syntax-highlighting/" &>/dev/null
+    git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/omz/fast-syntax-highlighting/" &>/dev/null
+    git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/omz/zsh-autocomplete/" &>/dev/null
+    git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/omz/autoswitch_virtualenv/" &>/dev/null
 
     # UNATTENDED Oh My Zsh installation
     print_status "Installing Oh My Zsh (unattended)..."
-    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended &>/dev/null
 
     rm -rf ~/.zshrc
 
-    cp -r /home/$USER/dots/omz/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/
-    cp -r /home/$USER/dots/omz/fast-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
-    cp -r /home/$USER/dots/omz/zsh-autocomplete/ ~/.oh-my-zsh/custom/plugins/
-    cp -r /home/$USER/dots/omz/zsh-autosuggestions/ ~/.oh-my-zsh/custom/plugins/
-    cp -r /home/$USER/dots/omz/zsh-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
+    print_status "Setting up Zsh plugins..."
+    cp -r /home/$USER/dots/omz/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/ &>/dev/null
+    cp -r /home/$USER/dots/omz/fast-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/ &>/dev/null
+    cp -r /home/$USER/dots/omz/zsh-autocomplete/ ~/.oh-my-zsh/custom/plugins/ &>/dev/null
+    cp -r /home/$USER/dots/omz/zsh-autosuggestions/ ~/.oh-my-zsh/custom/plugins/ &>/dev/null
+    cp -r /home/$USER/dots/omz/zsh-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/ &>/dev/null
 
     rm -rf /home/$USER/dots/omz/
     
     print_success "Oh My Zsh installation completed!"
     sleep 2
 }
+
 # Configuration Symlinking (KEEPING ORIGINAL CODE)
 setup_symlinks() {
     show_banner
@@ -334,7 +337,7 @@ install_sddm_theme() {
         echo -e "${CYAN}${THEME} INSTALLING SDDM THEME${NC}"
         echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
         print_status "Installing SDDM astronaut theme..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)" &>/dev/null
         print_success "SDDM theme installed!"
     fi
     sleep 2
@@ -350,9 +353,9 @@ install_grub_theme() {
         
         # KEEPING YOUR ORIGINAL GRUB THEME CODE
         cd /home/$USER/git/
-        git clone https://github.com/RomjanHossain/Grub-Themes.git
+        git clone https://github.com/RomjanHossain/Grub-Themes.git &>/dev/null
         cd /home/$USER/git/Grub-Themes/
-        sudo bash install.sh
+        sudo bash install.sh &>/dev/null
         
         print_success "GRUB themes installed!"
     fi
