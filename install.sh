@@ -53,21 +53,6 @@ print_error() {
     echo -e "${RED}${ERROR} $1${NC}"
 }
 
-# Function to show progress spinner
-spinner() {
-    local pid=$!
-    local delay=0.1
-    local spinstr='|/-\'
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        local spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    printf "    \b\b\b\b"
-}
-
 # Function to confirm action
 confirm_action() {
     while true; do
@@ -147,55 +132,73 @@ aur_installation() {
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
     print_status "Installing AUR packages..."
     
-    local aur_packages=(
-        "swww" "hyprshot" "hypridle" "hyprlock" "hyprpicker" "swaync" "wl-clipboard"
-        "brave" "code" "nemo" "nwg-look" "gnome-disk-utility" "nwg-displays" "zsh"
-        "ttf-meslo-nerd" "ttf-font-awesome" "ttf-font-awesome-4" "ttf-font-awesome-5"
-        "waybar" "rust" "cargo" "fastfetch" "cmatrix" "pavucontrol" "net-tools"
-        "waybar-module-pacman-updates-git" "python-pip" "python-psutil" "python-virtualenv"
-        "python-requests" "python-hijri-converter" "python-pytz" "python-gobject"
-        "xfce4-settings" "xfce-polkit" "exa" "rofi-wayland" "neovim" "goverlay-git"
-        "flatpak" "python-pywal16" "python-pywalfox"
-    )
-
-    for package in "${aur_packages[@]}"; do
-        print_status "Installing: $package"
-        if paru -S --needed --noconfirm "$package" &>/dev/null; then
-            echo -e "  ${GREEN}${CHECK} $package installed successfully${NC}"
-        else
-            echo -e "  ${RED}${ERROR} Failed to install $package${NC}"
-        fi
-    done
-    
-    print_success "AUR packages installation completed!"
+    if paru -S --needed --noconfirm \
+      swww \
+      hyprshot \
+      hypridle \
+      hyprlock \
+      hyprpicker \
+      swaync \
+      wl-clipboard \
+      brave \
+      code \
+      nemo \
+      nwg-look \
+      gnome-disk-utility \
+      nwg-displays \
+      zsh \
+      ttf-meslo-nerd \
+      ttf-font-awesome \
+      ttf-font-awesome-4 \
+      ttf-font-awesome-5 \
+      waybar \
+      rust \
+      cargo \
+      fastfetch \
+      cmatrix \
+      pavucontrol \
+      net-tools \
+      waybar-module-pacman-updates-git \
+      python-pip \
+      python-psutil \
+      python-virtualenv \
+      python-requests \
+      python-hijri-converter \
+      python-pytz \
+      python-gobject \
+      xfce4-settings \
+      xfce-polkit \
+      exa \
+      rofi-wayland \
+      neovim \
+      goverlay-git \
+      flatpak \
+      python-pywal16 \
+      python-pywalfox; then
+        print_success "AUR packages installed successfully!"
+    else
+        print_error "Some AUR packages failed to install!"
+    fi
     sleep 2
 }
 
-# Flatpak Installation (commented out but beautified)
+# Flatpak Installation
 flatpak_installation() {
     if confirm_action "Do you want to install Flatpak applications?"; then
         show_banner
         echo -e "${CYAN}${DOWNLOAD} INSTALLING FLATPAK APPLICATIONS${NC}"
         echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+        print_status "Installing Flatpaks..."
         
-        local flatpaks=(
-            "org.audacityteam.Audacity"
-            "org.libretro.RetroArch" 
-            "net.rpcs3.RPCS3"
-            "org.localsend.localsend_app"
-            "com.github.tchx84.Flatseal"
-        )
-
-        for flatpak in "${flatpaks[@]}"; do
-            print_status "Installing: $flatpak"
-            if flatpak install --noninteractive flathub "$flatpak" &>/dev/null; then
-                echo -e "  ${GREEN}${CHECK} $flatpak installed successfully${NC}"
-            else
-                echo -e "  ${RED}${ERROR} Failed to install $flatpak${NC}"
-            fi
-        done
+        # Keep your original flatpak commands commented out
+        # flatpak install --noninteractive flathub org.audacityteam.Audacity 
+        # flatpak install --noninteractive flathub org.libretro.RetroArch
+        # flatpak install --noninteractive flathub net.rpcs3.RPCS3
+        # flatpak install --noninteractive flathub org.localsend.localsend_app
+        # flatpak install --noninteractive flathub com.github.tchx84.Flatseal
         
-        print_success "Flatpak installation completed!"
+        print_warning "Flatpak installation section is commented out in the script"
+        print_status "Uncomment the flatpak lines in the script to enable installation"
     else
         print_warning "Skipping Flatpak installation"
     fi
@@ -207,129 +210,107 @@ create_directories() {
     show_banner
     echo -e "${CYAN}${FOLDER} CREATING DIRECTORIES${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    print_status "Creating directories..."
     
-    local directories=("~/git" "~/venv")
-    for dir in "${directories[@]}"; do
-        print_status "Creating: $dir"
-        if mkdir -p "$dir"; then
-            echo -e "  ${GREEN}${CHECK} $dir created successfully${NC}"
-        else
-            echo -e "  ${RED}${ERROR} Failed to create $dir${NC}"
-        fi
-    done
+    mkdir -p ~/git
+    mkdir -p ~/venv
+    
+    print_success "Directories created successfully!"
     sleep 2
 }
 
-# Oh My Zsh Installation
+# Final update check
+final_update() {
+    show_banner
+    echo -e "${CYAN}${HOURGLASS} FINAL SYSTEM CHECK${NC}"
+    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    print_status "Checking for updates on newly installed packages..."
+    if paru -Syyu --noconfirm; then
+        print_success "System is up to date!"
+    else
+        print_warning "Some updates may have failed"
+    fi
+    sleep 2
+}
+
+# Oh My Zsh Installation (KEEPING ORIGINAL LOGIC)
 install_oh_my_zsh() {
     show_banner
     echo -e "${CYAN}${GEAR} INSTALLING OH MY ZSH${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
-    
-    local omz_dir="/home/$USER/dots/omz"
-    local plugins=(
-        "https://github.com/zsh-users/zsh-autosuggestions.git"
-        "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-        "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
-        "https://github.com/marlonrichert/zsh-autocomplete.git"
-        "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git"
-    )
-
-    print_status "Creating OMZ directory..."
-    mkdir -p "$omz_dir"
-
-    for plugin in "${plugins[@]}"; do
-        local plugin_name=$(basename "$plugin" .git)
-        print_status "Cloning: $plugin_name"
-        if git clone "$plugin" "$omz_dir/$plugin_name/" &>/dev/null; then
-            echo -e "  ${GREEN}${CHECK} $plugin_name cloned successfully${NC}"
-        else
-            echo -e "  ${RED}${ERROR} Failed to clone $plugin_name${NC}"
-        fi
-    done
-
     print_status "Installing Oh My Zsh..."
-    if sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; then
-        print_success "Oh My Zsh installed successfully!"
-    else
-        print_error "Failed to install Oh My Zsh!"
-        return 1
-    fi
+    
+    # KEEPING YOUR ORIGINAL CODE
+    mkdir -p /home/$USER/dots/omz
 
-    # Copy plugins
-    print_status "Setting up plugins..."
+    git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "/home/$USER/dots/omz/zsh-autosuggestions/"
+    git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USER/dots/omz/zsh-syntax-highlighting/"
+    git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/omz/fast-syntax-highlighting/"
+    git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/omz/zsh-autocomplete/"
+    git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/omz/autoswitch_virtualenv/"
+
+    # UNATTENDED Oh My Zsh installation
+    print_status "Installing Oh My Zsh (unattended)..."
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
     rm -rf ~/.zshrc
-    cp -r "$omz_dir/autoswitch_virtualenv/" ~/.oh-my-zsh/custom/plugins/
-    cp -r "$omz_dir/fast-syntax-highlighting/" ~/.oh-my-zsh/custom/plugins/
-    cp -r "$omz_dir/zsh-autocomplete/" ~/.oh-my-zsh/custom/plugins/
-    cp -r "$omz_dir/zsh-autosuggestions/" ~/.oh-my-zsh/custom/plugins/
-    cp -r "$omz_dir/zsh-syntax-highlighting/" ~/.oh-my-zsh/custom/plugins/
 
-    rm -rf "$omz_dir"
-    print_success "Oh My Zsh configuration completed!"
+    cp -r /home/$USER/dots/omz/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/
+    cp -r /home/$USER/dots/omz/fast-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
+    cp -r /home/$USER/dots/omz/zsh-autocomplete/ ~/.oh-my-zsh/custom/plugins/
+    cp -r /home/$USER/dots/omz/zsh-autosuggestions/ ~/.oh-my-zsh/custom/plugins/
+    cp -r /home/$USER/dots/omz/zsh-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
+
+    rm -rf /home/$USER/dots/omz/
+    
+    print_success "Oh My Zsh installation completed!"
     sleep 2
 }
-
-# Configuration Symlinking
+# Configuration Symlinking (KEEPING ORIGINAL CODE)
 setup_symlinks() {
     show_banner
     echo -e "${CYAN}${GEAR} SETTING UP SYMLINKS${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    print_status "Creating symbolic links..."
     
-    local symlinks=(
-        ".zshrc"
-        "fastfetch/" ".config/"
-        "gtk-3.0/" ".config/"
-        "gtk-4.0/" ".config/"
-        "hypr/" ".config/"
-        "swaync/" ".config/"
-        "kitty/" ".config/"
-        "nvim/" ".config/"
-        "rofi/" ".config/"
-        "scripts/" ".config/"
-        "waybar/" ".config/"
-        ".icons/" ""
-        ".themes/" ""
-    )
+    # KEEPING YOUR ORIGINAL SYMLINK CODE EXACTLY
+    rm -rf /home/$USER/dots/omz/
+    rm -rf /home/$USER/.config/hypr
+    rm -rf /home/$USER/.config/kitty
+    ln -s /home/$USER/dots/.zshrc /home/$USER/
+    ln -s /home/$USER/dots/fastfetch/ /home/$USER/.config/
+    ln -s /home/$USER/dots/gtk-3.0/ /home/$USER/.config/
+    ln -s /home/$USER/dots/gtk-4.0/ /home/$USER/.config/
+    ln -s /home/$USER/dots/hypr/ /home/$USER/.config/
+    ln -s /home/$USER/dots/swaync/ /home/$USER/.config/
+    ln -s /home/$USER/dots/kitty/ /home/$USER/.config/
+    ln -s /home/$USER/dots/nvim/ /home/$USER/.config/
+    ln -s /home/$USER/dots/rofi/ /home/$USER/.config/
+    ln -s /home/$USER/dots/scripts/ /home/$USER/.config/
+    ln -s /home/$USER/dots/waybar/ /home/$USER/.config/
+    ln -s /home/$USER/dots/.icons/ /home/$USER/
+    ln -s /home/$USER/dots/.themes/ /home/$USER/
 
-    # Remove existing configs
-    rm -rf ~/.config/hypr ~/.config/kitty
-
-    for ((i=0; i<${#symlinks[@]}; i+=2)); do
-        local source="/home/$USER/dots/${symlinks[i]}"
-        local target="/home/$USER/${symlinks[i+1]}"
-        print_status "Linking: ${symlinks[i]}"
-        if ln -sf "$source" "$target"; then
-            echo -e "  ${GREEN}${CHECK} ${symlinks[i]} linked successfully${NC}"
-        else
-            echo -e "  ${RED}${ERROR} Failed to link ${symlinks[i]}${NC}"
-        fi
-    done
-
-    # System configs
-    print_status "Setting up system configurations..."
+    print_status "Symlinking system configurations..."
     sudo rm -rf /usr/share/icons/default
     sudo cp -r /home/$USER/dots/sys/cursors/default /usr/share/icons/
     sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
-    print_success "Symlinks and system configurations set up!"
+    
+    print_success "Symbolic links created successfully!"
     sleep 2
 }
 
-# Theme Application
+# Theme Application (KEEPING ORIGINAL CODE)
 apply_theme() {
     show_banner
     echo -e "${CYAN}${THEME} APPLYING THEME${NC}"
     echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
-    
     print_status "Applying cachydepths5k theme..."
     
-    # Copy theme files
-    cp -f ~/.config/waybar/themes/cachydepths5k.css ~/.config/waybar/style.css
-    cp -f ~/.config/hypr/themes/cachydepths5k.conf ~/.config/hypr/colors.conf
-    cp -f ~/.config/rofi/themes/cachydepths5k.rasi ~/.config/rofi/launcher/colors.rasi
-    cp -f ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
-
-    # Apply GNOME settings
+    # KEEPING YOUR ORIGINAL THEME CODE
+    cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
+    cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hypr/colors.conf
+    cp -r /home/$USER/.config/rofi/themes/cachydepths5k.rasi /home/$USER/.config/rofi/launcher/colors.rasi
     gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
     gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
     gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -337,12 +318,11 @@ apply_theme() {
     gsettings set org.gnome.desktop.interface document-font-name "MesloLGL Nerd Font 12"
     gsettings set org.gnome.desktop.interface monospace-font-name "MesloLGL Mono Nerd Font 12"
     gsettings set org.gnome.desktop.wm.preferences titlebar-font "MesloLGL Mono Nerd Font 12"
-
-    # Set wallpaper
+    cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
     swww-daemon 2>/dev/null &
     swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
     wal -i ~/.config/hypr/bg/bg.jpg --cols16
-
+    
     print_success "Theme applied successfully!"
     sleep 2
 }
@@ -366,33 +346,15 @@ install_grub_theme() {
         show_banner
         echo -e "${CYAN}${THEME} INSTALLING GRUB THEMES${NC}"
         echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+        print_status "Installing GRUB themes..."
         
-        print_status "Downloading GRUB themes..."
-        mkdir -p ~/git
-        cd ~/git/
-        if git clone https://github.com/RomjanHossain/Grub-Themes.git &>/dev/null; then
-            print_success "GRUB themes downloaded!"
-            cd Grub-Themes/
-            print_status "Installing GRUB themes..."
-            sudo bash install.sh
-            print_success "GRUB themes installed!"
-        else
-            print_error "Failed to download GRUB themes!"
-        fi
-    fi
-    sleep 2
-}
-
-# Final update check
-final_update() {
-    show_banner
-    echo -e "${CYAN}${HOURGLASS} FINAL SYSTEM CHECK${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
-    print_status "Checking for updates on newly installed packages..."
-    if paru -Syyu --noconfirm; then
-        print_success "System is up to date!"
-    else
-        print_warning "Some updates may have failed"
+        # KEEPING YOUR ORIGINAL GRUB THEME CODE
+        cd /home/$USER/git/
+        git clone https://github.com/RomjanHossain/Grub-Themes.git
+        cd /home/$USER/git/Grub-Themes/
+        sudo bash install.sh
+        
+        print_success "GRUB themes installed!"
     fi
     sleep 2
 }
