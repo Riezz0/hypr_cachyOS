@@ -1,9 +1,3 @@
-#-----Download-The Repo-----#
-git clone https://github.com/Riezz0/hypr_cachyOS.git /home/$USER/dots/
-chmod +x /home/$USER/dots/setup.sh
-cd /home/$USER/dots/ 
-bash /home/$USER/dots/setup.sh
-
 #-----Sys-Update-----#
 echo "Updating The System"
 sleep 3

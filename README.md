@@ -3,7 +3,7 @@
 # Installation:
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Riezz0/hypr_cachyOS/refs/heads/main/setup.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Riezz0/hypr_cachyOS/refs/heads/main/get-repo.sh)"
 ```
 
 # IMPORTANT NOTE 🤓
