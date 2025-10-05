@@ -30,8 +30,8 @@ show_banner() {
     clear
     echo -e "${PURPLE}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║                   ${CYAN}SYSTEM INSTALLER${PURPLE}                     ║"
-    echo "║                 ${YELLOW}Hyprland Desktop Setup${PURPLE}               ║"
+    echo "║               ${CYAN}SYSTEM INSTALLER${PURPLE}               ║"
+    echo "║           ${YELLOW}Hyprland Desktop Setup${PURPLE}           ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
 }
