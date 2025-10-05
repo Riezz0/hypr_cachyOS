@@ -147,7 +147,6 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
-waybar 2>/dev/null & 
 
 #-----Instal-SDDM-Theme-----#
 echo "Install SDDM Themes"
