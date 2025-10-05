@@ -1,5 +1,4 @@
 #-----Download-The Repo-----#
-rm -rf /home/$USER/dots/
 git clone https://github.com/Riezz0/hypr_cachyOS.git /home/$USER/dots/
 chmod +x /home/$USER/dots/setup.sh
 cd /home/$USER/dots/ 
