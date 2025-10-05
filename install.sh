@@ -1,12 +1,15 @@
 #!/bin/bash
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
+# CachyOS Color Theme
+PINK='\033[1;38;5;212m'
+PURPLE='\033[1;38;5;141m'
+BLUE='\033[1;38;5;117m'
+GREEN='\033[1;38;5;84m'
+YELLOW='\033[1;38;5;227m'
+ORANGE='\033[1;38;5;215m'
+RED='\033[1;38;5;204m'
+CYAN='\033[1;38;5;51m'
+MAGENTA='\033[1;38;5;201m'
 NC='\033[0m' # No Color
 
 # Emojis
@@ -24,14 +27,15 @@ TRASH="🗑️"
 COMPUTER="💻"
 THEME="🎨"
 REBOOT="🔁"
+PACKAGE="📦"
 
 # Function to display colorful banner
 show_banner() {
     clear
-    echo -e "${PURPLE}"
+    echo -e "${PINK}"
     echo "╔══════════════════════════════════════════════════════════════╗"
-    echo "║                   ${CYAN}SYSTEM INSTALLER${PURPLE}                     ║"
-    echo "║                 ${YELLOW}Hyprland Desktop Setup${PURPLE}               ║"
+    echo "║                   ${CYAN}SYSTEM INSTALLER${PINK}             ║"
+    echo "║                 ${BLUE}Hyprland Desktop Setup${PINK}         ║"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
 }
@@ -51,6 +55,18 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}${ERROR} $1${NC}"
+}
+
+print_package_installing() {
+    echo -e "${CYAN}${PACKAGE} Installing: $1${NC}"
+}
+
+print_package_success() {
+    echo -e "${GREEN}${CHECK} Success: $1${NC}"
+}
+
+print_package_error() {
+    echo -e "${RED}${ERROR} Failed: $1${NC}"
 }
 
 # Function to confirm action
@@ -112,11 +128,11 @@ show_main_menu() {
 # System Update
 system_update() {
     show_banner
-    echo -e "${CYAN}${COMPUTER} UPDATING SYSTEM${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${COMPUTER} UPDATING SYSTEM${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Updating system packages..."
     
-    if paru -Syyu --noconfirm &>/dev/null; then
+    if paru -Syyu --noconfirm; then
         print_success "System updated successfully!"
     else
         print_error "Failed to update system!"
@@ -128,56 +144,38 @@ system_update() {
 # AUR Installation
 aur_installation() {
     show_banner
-    echo -e "${CYAN}${DOWNLOAD} INSTALLING AUR PACKAGES${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
-    print_status "Installing AUR packages (this may take a while)..."
+    echo -e "${PINK}${DOWNLOAD} INSTALLING AUR PACKAGES${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     
-    if paru -S --needed --noconfirm \
-      swww \
-      hyprshot \
-      hypridle \
-      hyprlock \
-      hyprpicker \
-      swaync \
-      wl-clipboard \
-      brave \
-      code \
-      nemo \
-      nwg-look \
-      gnome-disk-utility \
-      nwg-displays \
-      zsh \
-      ttf-meslo-nerd \
-      ttf-font-awesome \
-      ttf-font-awesome-4 \
-      ttf-font-awesome-5 \
-      waybar \
-      rust \
-      cargo \
-      fastfetch \
-      cmatrix \
-      pavucontrol \
-      net-tools \
-      waybar-module-pacman-updates-git \
-      python-pip \
-      python-psutil \
-      python-virtualenv \
-      python-requests \
-      python-hijri-converter \
-      python-pytz \
-      python-gobject \
-      xfce4-settings \
-      xfce-polkit \
-      exa \
-      rofi-wayland \
-      neovim \
-      goverlay-git \
-      flatpak \
-      python-pywal16 \
-      python-pywalfox &>/dev/null; then
-        print_success "AUR packages installed successfully!"
+    # List of AUR packages to install
+    local aur_packages=(
+        "swww" "hyprshot" "hypridle" "hyprlock" "hyprpicker" "swaync" "wl-clipboard"
+        "brave" "code" "nemo" "nwg-look" "gnome-disk-utility" "nwg-displays" "zsh"
+        "ttf-meslo-nerd" "ttf-font-awesome" "ttf-font-awesome-4" "ttf-font-awesome-5"
+        "waybar" "rust" "cargo" "fastfetch" "cmatrix" "pavucontrol" "net-tools"
+        "waybar-module-pacman-updates-git" "python-pip" "python-psutil" "python-virtualenv"
+        "python-requests" "python-hijri-converter" "python-pytz" "python-gobject"
+        "xfce4-settings" "xfce-polkit" "exa" "rofi-wayland" "neovim" "goverlay-git"
+        "flatpak" "python-pywal16" "python-pywalfox"
+    )
+
+    local failed_packages=()
+    
+    for package in "${aur_packages[@]}"; do
+        print_package_installing "$package"
+        if paru -S --needed --noconfirm "$package"; then
+            print_package_success "$package"
+        else
+            print_package_error "$package"
+            failed_packages+=("$package")
+        fi
+        echo ""  # Add spacing between packages
+    done
+    
+    if [ ${#failed_packages[@]} -eq 0 ]; then
+        print_success "All AUR packages installed successfully!"
     else
-        print_error "Some AUR packages failed to install!"
+        print_warning "The following packages failed to install: ${failed_packages[*]}"
     fi
     sleep 2
 }
@@ -186,8 +184,8 @@ aur_installation() {
 flatpak_installation() {
     if confirm_action "Do you want to install Flatpak applications?"; then
         show_banner
-        echo -e "${CYAN}${DOWNLOAD} INSTALLING FLATPAK APPLICATIONS${NC}"
-        echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+        echo -e "${PINK}${DOWNLOAD} INSTALLING FLATPAK APPLICATIONS${NC}"
+        echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
         print_status "Installing Flatpaks..."
         
         # Keep your original flatpak commands commented out
@@ -208,8 +206,8 @@ flatpak_installation() {
 # Create Directories
 create_directories() {
     show_banner
-    echo -e "${CYAN}${FOLDER} CREATING DIRECTORIES${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${FOLDER} CREATING DIRECTORIES${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Creating directories..."
     
     mkdir -p ~/git
@@ -222,10 +220,10 @@ create_directories() {
 # Final update check
 final_update() {
     show_banner
-    echo -e "${CYAN}${HOURGLASS} FINAL SYSTEM CHECK${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${HOURGLASS} FINAL SYSTEM CHECK${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Checking for updates on newly installed packages..."
-    if paru -Syyu --noconfirm &>/dev/null; then
+    if paru -Syyu --noconfirm; then
         print_success "System is up to date!"
     else
         print_warning "Some updates may have failed"
@@ -236,8 +234,8 @@ final_update() {
 # Oh My Zsh Installation (KEEPING ORIGINAL LOGIC)
 install_oh_my_zsh() {
     show_banner
-    echo -e "${CYAN}${GEAR} INSTALLING OH MY ZSH${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${GEAR} INSTALLING OH MY ZSH${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Installing Oh My Zsh..."
     
     # KEEPING YOUR ORIGINAL CODE
@@ -245,10 +243,19 @@ install_oh_my_zsh() {
 
     print_status "Cloning Zsh plugins..."
     git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "/home/$USER/dots/omz/zsh-autosuggestions/" &>/dev/null
+    print_package_success "zsh-autosuggestions"
+    
     git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USER/dots/omz/zsh-syntax-highlighting/" &>/dev/null
+    print_package_success "zsh-syntax-highlighting"
+    
     git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/omz/fast-syntax-highlighting/" &>/dev/null
+    print_package_success "fast-syntax-highlighting"
+    
     git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/omz/zsh-autocomplete/" &>/dev/null
+    print_package_success "zsh-autocomplete"
+    
     git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/omz/autoswitch_virtualenv/" &>/dev/null
+    print_package_success "autoswitch-virtualenv"
 
     # UNATTENDED Oh My Zsh installation
     print_status "Installing Oh My Zsh (unattended)..."
@@ -272,27 +279,29 @@ install_oh_my_zsh() {
 # Configuration Symlinking (KEEPING ORIGINAL CODE)
 setup_symlinks() {
     show_banner
-    echo -e "${CYAN}${GEAR} SETTING UP SYMLINKS${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${GEAR} SETTING UP SYMLINKS${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Creating symbolic links..."
     
     # KEEPING YOUR ORIGINAL SYMLINK CODE EXACTLY
     rm -rf /home/$USER/dots/omz/
     rm -rf /home/$USER/.config/hypr
     rm -rf /home/$USER/.config/kitty
-    ln -s /home/$USER/dots/.zshrc /home/$USER/
-    ln -s /home/$USER/dots/fastfetch/ /home/$USER/.config/
-    ln -s /home/$USER/dots/gtk-3.0/ /home/$USER/.config/
-    ln -s /home/$USER/dots/gtk-4.0/ /home/$USER/.config/
-    ln -s /home/$USER/dots/hypr/ /home/$USER/.config/
-    ln -s /home/$USER/dots/swaync/ /home/$USER/.config/
-    ln -s /home/$USER/dots/kitty/ /home/$USER/.config/
-    ln -s /home/$USER/dots/nvim/ /home/$USER/.config/
-    ln -s /home/$USER/dots/rofi/ /home/$USER/.config/
-    ln -s /home/$USER/dots/scripts/ /home/$USER/.config/
-    ln -s /home/$USER/dots/waybar/ /home/$USER/.config/
-    ln -s /home/$USER/dots/.icons/ /home/$USER/
-    ln -s /home/$USER/dots/.themes/ /home/$USER/
+    
+    print_status "Creating symlinks..."
+    ln -s /home/$USER/dots/.zshrc /home/$USER/ && print_package_success ".zshrc"
+    ln -s /home/$USER/dots/fastfetch/ /home/$USER/.config/ && print_package_success "fastfetch"
+    ln -s /home/$USER/dots/gtk-3.0/ /home/$USER/.config/ && print_package_success "gtk-3.0"
+    ln -s /home/$USER/dots/gtk-4.0/ /home/$USER/.config/ && print_package_success "gtk-4.0"
+    ln -s /home/$USER/dots/hypr/ /home/$USER/.config/ && print_package_success "hypr"
+    ln -s /home/$USER/dots/swaync/ /home/$USER/.config/ && print_package_success "swaync"
+    ln -s /home/$USER/dots/kitty/ /home/$USER/.config/ && print_package_success "kitty"
+    ln -s /home/$USER/dots/nvim/ /home/$USER/.config/ && print_package_success "nvim"
+    ln -s /home/$USER/dots/rofi/ /home/$USER/.config/ && print_package_success "rofi"
+    ln -s /home/$USER/dots/scripts/ /home/$USER/.config/ && print_package_success "scripts"
+    ln -s /home/$USER/dots/waybar/ /home/$USER/.config/ && print_package_success "waybar"
+    ln -s /home/$USER/dots/.icons/ /home/$USER/ && print_package_success ".icons"
+    ln -s /home/$USER/dots/.themes/ /home/$USER/ && print_package_success ".themes"
 
     print_status "Symlinking system configurations..."
     sudo rm -rf /usr/share/icons/default
@@ -306,14 +315,20 @@ setup_symlinks() {
 # Theme Application (KEEPING ORIGINAL CODE)
 apply_theme() {
     show_banner
-    echo -e "${CYAN}${THEME} APPLYING THEME${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${THEME} APPLYING THEME${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_status "Applying cachydepths5k theme..."
     
     # KEEPING YOUR ORIGINAL THEME CODE
     cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
+    print_package_success "waybar theme"
+    
     cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hypr/colors.conf
+    print_package_success "hypr colors"
+    
     cp -r /home/$USER/.config/rofi/themes/cachydepths5k.rasi /home/$USER/.config/rofi/launcher/colors.rasi
+    print_package_success "rofi theme"
+    
     gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
     gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
     gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -321,7 +336,11 @@ apply_theme() {
     gsettings set org.gnome.desktop.interface document-font-name "MesloLGL Nerd Font 12"
     gsettings set org.gnome.desktop.interface monospace-font-name "MesloLGL Mono Nerd Font 12"
     gsettings set org.gnome.desktop.wm.preferences titlebar-font "MesloLGL Mono Nerd Font 12"
+    print_package_success "GNOME settings"
+    
     cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
+    print_package_success "wallpaper"
+    
     swww-daemon 2>/dev/null &
     swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
     wal -i ~/.config/hypr/bg/bg.jpg --cols16
@@ -334,11 +353,14 @@ apply_theme() {
 install_sddm_theme() {
     if confirm_action "Do you want to install SDDM astronaut theme?"; then
         show_banner
-        echo -e "${CYAN}${THEME} INSTALLING SDDM THEME${NC}"
-        echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+        echo -e "${PINK}${THEME} INSTALLING SDDM THEME${NC}"
+        echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
         print_status "Installing SDDM astronaut theme..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)" &>/dev/null
-        print_success "SDDM theme installed!"
+        echo -e "${YELLOW}The SDDM installer may show prompts below:${NC}"
+        echo -e "${BLUE}────────────────────────────────────────────${NC}"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
+        echo -e "${BLUE}────────────────────────────────────────────${NC}"
+        print_success "SDDM theme installation completed!"
     fi
     sleep 2
 }
@@ -347,17 +369,21 @@ install_sddm_theme() {
 install_grub_theme() {
     if confirm_action "Do you want to install GRUB themes?"; then
         show_banner
-        echo -e "${CYAN}${THEME} INSTALLING GRUB THEMES${NC}"
-        echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+        echo -e "${PINK}${THEME} INSTALLING GRUB THEMES${NC}"
+        echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
         print_status "Installing GRUB themes..."
         
-        # KEEPING YOUR ORIGINAL GRUB THEME CODE
+        # KEEPING YOUR ORIGINAL GRUB THEME CODE - NO OUTPUT SUPPRESSION
         cd /home/$USER/git/
-        git clone https://github.com/RomjanHossain/Grub-Themes.git &>/dev/null
+        echo -e "${YELLOW}Cloning GRUB themes repository...${NC}"
+        git clone https://github.com/RomjanHossain/Grub-Themes.git
         cd /home/$USER/git/Grub-Themes/
-        sudo bash install.sh &>/dev/null
+        echo -e "${YELLOW}Running GRUB theme installer (may show prompts)...${NC}"
+        echo -e "${BLUE}────────────────────────────────────────────${NC}"
+        sudo bash install.sh
+        echo -e "${BLUE}────────────────────────────────────────────${NC}"
         
-        print_success "GRUB themes installed!"
+        print_success "GRUB themes installation completed!"
     fi
     sleep 2
 }
@@ -365,8 +391,8 @@ install_grub_theme() {
 # Theme configuration only
 theme_configuration() {
     show_banner
-    echo -e "${CYAN}${THEME} THEME CONFIGURATION${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${THEME} THEME CONFIGURATION${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     
     setup_symlinks
     apply_theme
@@ -380,8 +406,8 @@ theme_configuration() {
 # Full installation
 full_installation() {
     show_banner
-    echo -e "${CYAN}${ROCKET} STARTING FULL INSTALLATION${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${PINK}${ROCKET} STARTING FULL INSTALLATION${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     
     system_update
     aur_installation
@@ -393,7 +419,7 @@ full_installation() {
     
     show_banner
     echo -e "${GREEN}${PARTY} INSTALLATION COMPLETE! ${PARTY}${NC}"
-    echo -e "${YELLOW}══════════════════════════════════════════════════${NC}"
+    echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
     print_success "All components installed successfully!"
     
     if confirm_action "Do you want to reboot the system now?"; then
