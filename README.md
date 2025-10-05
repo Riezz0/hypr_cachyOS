@@ -2,7 +2,8 @@
 
 # Installation:
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Riezz0/hypr_cachyOS/refs/heads/main/setup.sh
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Riezz0/hypr_cachyOS/refs/heads/main/setup.sh)"
 
 # IMPORTANT NOTE 🤓
 Ensure you type "exit" once oh-my-zsh has installed and 
