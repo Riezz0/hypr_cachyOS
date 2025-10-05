@@ -1,3 +1,9 @@
+#-----Download-The Repo-----#
+git clone https://github.com/Riezz0/hypr_cachyOS.git /home/$USER/dots/
+chmod +x /home/$USER/dots/setup.sh
+cd /home/$USER/dots/ 
+sudo bash setup.sh
+
 #-----Sys-Update-----#
 echo "Updating The System"
 sleep 3
@@ -128,7 +134,7 @@ sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
 echo "Applying Theme"
 sleep 3
 cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
-cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hyprer/colors.conf
+cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hypr/colors.conf
 cp -r /home/$USER/.config/rofi/themes/cachydepths5k.rasi /home/$USER/.config/rofi/launcher/colors.rasi
 gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
 gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"

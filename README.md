@@ -1,33 +1,15 @@
 # hypr_cachyOS
 
-Installation:
+# Installation:
 
-1. Clone the repo: 
-```bash
-git clone https://github.com/Riezz0/hypr_cachyOS.git /home/$USER/dots/
-```
-2. Change executeable permissions
-```
-chmod +x /home/$USER/dots/setup.sh
-```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Riezz0/hypr_cachyOS/refs/heads/main/setup.sh
 
-3. Run the setup - Ensure you are in the /home/$USER/dots directory
-```bash
-cd /home/$USER/dots/ 
-```
-```bash
-./setup.sh
-```
-
-4. Ensure you type "exit" once oh-my-zsh has installed and 
+# IMPORTANT NOTE 🤓
+Ensure you type "exit" once oh-my-zsh has installed and 
 you have set it as the default shell so that the remainder of 
 the installation may continue
 
-5. Enjoy !!!!
-
-This is still a W.I.P XD
-
-Important Notes:
+This is still a W.I.P 😊
 
 1. This setup might not be compatible with your setup. 
 2. This has been setup using a fresh install of Cachy OS and lightdm-gtk-greeter.
