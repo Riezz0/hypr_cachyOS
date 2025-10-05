@@ -124,11 +124,6 @@ sudo rm -rf /usr/share/icons/default
 sudo cp -r /home/$USER/dots/sys/cursors/default /usr/share/icons/
 sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
 
-#sudo mkdir -p /usr/share/bg/
-#sudo cp -r /home/$USER/dots/sys/bg/bg.jpg /usr/share/bg/
-#sudo cp -r /home/$USER/dots/.icons/oomox-lightdm /usr/share/icons/
-#sudo cp -r /home/$USER/dots/.themes/oomox-lightdm /usr/share/themes/
-
 #-----Apply-Theme-----#
 echo "Applying Theme"
 sleep 3
@@ -140,8 +135,6 @@ gsettings set org.gnome.desktop.interface font-name "MesloLGL Nerd Font 12"
 gsettings set org.gnome.desktop.interface document-font-name "MesloLGL Nerd Font 12"
 gsettings set org.gnome.desktop.interface monospace-font-name "MesloLGL Mono Nerd Font 12"
 gsettings set org.gnome.desktop.wm.preferences titlebar-font "MesloLGL Mono Nerd Font 12"
-
-#sudo cp -r /home/$USER/dots/sys/lightdm/ /etc/
 
 cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 
@@ -155,16 +148,17 @@ wal -i ~/.config/hypr/bg/bg.jpg --cols16
 
 #-----Instal-SDDM-Theme-----#
 
+echo "Install SDDM Themes"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
 
 #-----Install-GRUB-Theme-----#
 
-echo "Please Choose Your GRUB Theme"
+echo "Installing GRUB Themes"
 sleep 5
 
-cd ~/git/
+cd /home/$USER/git/
 git clone https://github.com/RomjanHossain/Grub-Themes.git
-cd ~/git/Grub-Themes/
+cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
 echo "Installation Complete !!!"
