@@ -15,16 +15,12 @@ paru -S --needed --noconfirm \
 	hyprpicker \
   swaync \
 	wl-clipboard \
-  colorz \
   brave \
-  proton-authenticator-bin \
   code \
 	nemo \
 	nwg-look \
   gnome-disk-utility \
   nwg-displays \
-	python-pywal16 \
-	python-pywalfox \
 	zsh \
   ttf-meslo-nerd \
   ttf-font-awesome \
@@ -52,6 +48,8 @@ paru -S --needed --noconfirm \
   neovim \
   goverlay-git \
   flatpak \
+  python-pywal16 \
+	python-pywalfox \
 
 #-----Flatpaks-----#
 
@@ -158,13 +156,12 @@ wal -i ~/.config/hypr/bg/bg.jpg --cols16
 #-----Apply-GRUB-Theme-----#
 
 echo "Please Choose Your GRUB Theme"
-echo "You Can Have A Look At https://github.com/vinceliuice/Elegant-grub2-themes For The Previews !!!!"
 sleep 5
 
 cd ~/git/
-git clone https://github.com/vinceliuice/Elegant-grub2-themes.git
-cd Elegant-grub2-themes/
-./install.sh
+git clone https://github.com/RomjanHossain/Grub-Themes.git
+cd ~/git/Grub-Themes
+sudo ./install.sh
 
 echo "Installation Complete !!!"
 echo "Rebooting The System"
