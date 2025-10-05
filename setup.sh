@@ -127,7 +127,7 @@ sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
 #-----Apply-Theme-----#
 echo "Applying Theme"
 sleep 3
-cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/waybar/style.css
+cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
 gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
 gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -135,34 +135,27 @@ gsettings set org.gnome.desktop.interface font-name "MesloLGL Nerd Font 12"
 gsettings set org.gnome.desktop.interface document-font-name "MesloLGL Nerd Font 12"
 gsettings set org.gnome.desktop.interface monospace-font-name "MesloLGL Mono Nerd Font 12"
 gsettings set org.gnome.desktop.wm.preferences titlebar-font "MesloLGL Mono Nerd Font 12"
-
 cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
-
 swww-daemon 2>/dev/null &
-
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
-
-sleep 5
-
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
+waybar 2>/dev/nul & 
 
 #-----Instal-SDDM-Theme-----#
-
 echo "Install SDDM Themes"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
 
 #-----Install-GRUB-Theme-----#
 
 echo "Installing GRUB Themes"
-sleep 5
-
+sleep 1
 cd /home/$USER/git/
 git clone https://github.com/RomjanHossain/Grub-Themes.git
 cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
+#------Reboot-----#
 echo "Installation Complete !!!"
 echo "Rebooting The System"
-
-sleep 3
+sleep 1
 sudo systemctl reboot
