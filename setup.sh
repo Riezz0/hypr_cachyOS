@@ -53,13 +53,13 @@ paru -S --needed --noconfirm \
 
 #-----Flatpaks-----#
 
-echo "Installing FlatPaks....."
-sleep 3
-flatpak install --noninteractive flathub org.audacityteam.Audacity 
-flatpak install --noninteractive flathub org.libretro.RetroArch
-flatpak install --noninteractive flathub net.rpcs3.RPCS3
-flatpak install --noninteractive flathub org.localsend.localsend_app
-flatpak install --noninteractive flathub com.github.tchx84.Flatseal
+#echo "Installing FlatPaks....."
+#sleep 3
+#flatpak install --noninteractive flathub org.audacityteam.Audacity 
+#flatpak install --noninteractive flathub org.libretro.RetroArch
+#flatpak install --noninteractive flathub net.rpcs3.RPCS3
+#flatpak install --noninteractive flathub org.localsend.localsend_app
+#flatpak install --noninteractive flathub com.github.tchx84.Flatseal
 
 
 #-----Create-Directories-----#
@@ -127,7 +127,7 @@ sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
 #-----Apply-Theme-----#
 echo "Applying Theme"
 sleep 3
-
+cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/waybar/style.css
 gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
 gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -138,9 +138,9 @@ gsettings set org.gnome.desktop.wm.preferences titlebar-font "MesloLGL Mono Nerd
 
 cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 
-swww-daemon &
+swww-daemon 2>/dev/null &
 
-swww img ~/.config/hypr/bg/bg.jpg &
+swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 
 sleep 5
 
