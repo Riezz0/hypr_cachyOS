@@ -156,7 +156,8 @@ aur_installation() {
         "waybar-module-pacman-updates-git" "python-pip" "python-psutil" "python-virtualenv"
         "python-requests" "python-hijri-converter" "python-pytz" "python-gobject"
         "xfce4-settings" "xfce-polkit" "exa" "rofi-wayland" "neovim" "goverlay-git"
-        "flatpak" "python-pywal16" "python-pywalfox"
+        "flatpak" "python-pywal16" "python-pywalfox" "make" "automake" "linux-firmware" 
+        "linux-headers" "dkms" "base-devel" "coolercontrol"
     )
 
     local failed_packages=()
@@ -189,11 +190,11 @@ flatpak_installation() {
         print_status "Installing Flatpaks..."
         
         # Keep your original flatpak commands commented out
-        # flatpak install --noninteractive flathub org.audacityteam.Audacity 
-        # flatpak install --noninteractive flathub org.libretro.RetroArch
-        # flatpak install --noninteractive flathub net.rpcs3.RPCS3
-        # flatpak install --noninteractive flathub org.localsend.localsend_app
-        # flatpak install --noninteractive flathub com.github.tchx84.Flatseal
+        flatpak install --noninteractive flathub org.audacityteam.Audacity 
+        flatpak install --noninteractive flathub org.libretro.RetroArch
+        flatpak install --noninteractive flathub net.rpcs3.RPCS3
+        flatpak install --noninteractive flathub org.localsend.localsend_app
+        flatpak install --noninteractive flathub com.github.tchx84.Flatseal
         
         print_warning "Flatpak installation section is commented out in the script"
         print_status "Uncomment the flatpak lines in the script to enable installation"
@@ -308,6 +309,23 @@ setup_symlinks() {
     sudo cp -r /home/$USER/dots/sys/cursors/default /usr/share/icons/
     sudo cp -r /home/$USER/dots/sys/cursors/Future-black-cursors /usr/share/icons/
     
+    # NEW: Copy NCT6687D configuration files
+    print_status "Copying NCT6687D configuration files..."
+    if [ -f "/home/$USER/dots/sys/no_nct6683.conf" ]; then
+        sudo cp -r /home/$USER/dots/sys/no_nct6683.conf /etc/modprobe.d/
+        print_package_success "no_nct6683.conf copied to /etc/modprobe.d/"
+    else
+        print_warning "no_nct6683.conf not found in dots/sys/"
+    fi
+    
+    if [ -f "/home/$USER/dots/sys/nct6687.conf" ]; then
+        sudo mkdir -p /etc/modules-load.d/
+        sudo cp -r /home/$USER/dots/sys/nct6687.conf /etc/modules-load.d/gnutls.conf
+        print_package_success "nct6687.conf copied to /etc/modules-load.d/gnutls.conf"
+    else
+        print_warning "nct6687.conf not found in dots/sys/"
+    fi
+    
     print_success "Symbolic links created successfully!"
     sleep 2
 }
@@ -388,6 +406,45 @@ install_grub_theme() {
     sleep 2
 }
 
+# NCT6687D Driver Installation
+install_nct6687d_driver() {
+    if confirm_action "Do you want to install NCT6687D driver for coolercontrol?"; then
+        show_banner
+        echo -e "${PINK}${GEAR} INSTALLING NCT6687D DRIVER${NC}"
+        echo -e "${BLUE}══════════════════════════════════════════════════${NC}"
+        print_status "Installing NCT6687D driver..."
+        
+        # Create temporary directory
+        mkdir -p /home/$USER/tmp/
+        
+        # Clone the repository
+        print_status "Cloning NCT6687D repository..."
+        git clone https://github.com/Fred78290/nct6687d /home/$USER/tmp/nct6687d
+        
+        # Build and install the driver
+        print_status "Building and installing NCT6687D driver..."
+        cd /home/$USER/tmp/nct6687d/
+        make dkms/install
+        
+        # Load the module
+        print_status "Loading NCT6687D module..."
+        sudo modprobe nct6687
+        
+        # NEW: Additional modprobe for nct6687
+        print_status "Loading nct6687 module..."
+        sudo modprobe nct6687
+        
+        # Clean up
+        print_status "Cleaning up temporary files..."
+        rm -rf /home/$USER/tmp/nct6687d/
+        
+        print_success "NCT6687D driver installed successfully!"
+    else
+        print_warning "Skipping NCT6687D driver installation"
+    fi
+    sleep 2
+}
+
 # Theme configuration only
 theme_configuration() {
     show_banner
@@ -415,6 +472,7 @@ full_installation() {
     create_directories
     final_update
     install_oh_my_zsh
+    install_nct6687d_driver
     theme_configuration
     
     show_banner
