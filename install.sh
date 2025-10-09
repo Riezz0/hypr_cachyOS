@@ -97,8 +97,8 @@ git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/h
 # Install Oh My Zsh and change default shell
 echo "Installing Oh My Zsh and changing default shell to zsh..."
 CHSH=yes RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-
-echo "Installation complete! Default shell changed to zsh."
+chsh -s $(which zsh)
+echo "OMZ Installation complete! Default shell changed to zsh."
 cp -r /home/$USER/dots/tmp/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/fast-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/zsh-autocomplete/ ~/.oh-my-zsh/custom/plugins/
