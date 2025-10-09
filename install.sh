@@ -92,13 +92,18 @@ git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USE
 git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/tmp/fast-syntax-highlighting/"
 git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/tmp/zsh-autocomplete/"
 git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/tmp/autoswitch_virtualenv/"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+
+# Install Oh My Zsh and change default shell
+echo "Installing Oh My Zsh and changing default shell to zsh..."
+CHSH=yes RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+echo "Installation complete! Default shell changed to zsh."
 cp -r /home/$USER/dots/tmp/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/fast-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/zsh-autocomplete/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/zsh-autosuggestions/ ~/.oh-my-zsh/custom/plugins/
 cp -r /home/$USER/dots/tmp/zsh-syntax-highlighting/ ~/.oh-my-zsh/custom/plugins/
-chsh -s $(which zsh)
 
 #-----NCT6687D-Installation-----#
 echo "Installing NCT6687D"
