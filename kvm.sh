@@ -1,68 +1,103 @@
 #!/bin/bash
-#  _  ____     ____  __  
-# | |/ /\ \   / /  \/  | 
-# | ' /  \ \ / /| |\/| | 
-# | . \   \ V / | |  | | 
-# |_|\_\   \_/  |_|  |_| 
-#                        
-#  
-# by Stephan Raabe (2023) 
-# ----------------------------------------------------- 
 
-# ------------------------------------------------------
-# Install Script for Libvirt
-# ------------------------------------------------------
+# QEMU/KVM Automated Installation Script for Arch Linux
+set -e  # Exit on any error
 
-read -p "Do you want to start? " s
-echo "START KVM/QEMU/VIRT MANAGER INSTALLATION..."
+echo "Starting QEMU/KVM installation..."
 
-# ------------------------------------------------------
-# Install Packages
-# ------------------------------------------------------
-sudo pacman -S virt-manager virt-viewer qemu vde2 ebtables iptables-nft nftables dnsmasq bridge-utils ovmf swtpm
+# Check if running as root
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root or with sudo"
+    exit 1
+fi
 
-# ------------------------------------------------------
-# Edit libvirtd.conf
-# ------------------------------------------------------
-echo "Manual steps required:"
-echo "Open sudo vim /etc/libvirt/libvirtd.conf:"
-echo 'Remove # at the following lines: unix_sock_group = "libvirt" and unix_sock_rw_perms = "0770"'
-read -p "Press any key to open libvirtd.conf: " c
-sudo vim /etc/libvirt/libvirtd.conf
-sudo echo 'log_filters="3:qemu 1:libvirt"' >> /etc/libvirt/libvirtd.conf
-sudo echo 'log_outputs="2:file:/var/log/libvirt/libvirtd.log"' >> /etc/libvirt/libvirtd.conf
+# Update system
+echo "Updating system..."
+pacman -Syu --noconfirm
 
-# ------------------------------------------------------
-# Add user to the group
-# ------------------------------------------------------
-sudo usermod -a -G kvm,libvirt $(whoami)
+# Check CPU virtualization support
+echo "Checking CPU virtualization support..."
+if grep -E "(vmx|svm)" /proc/cpuinfo > /dev/null; then
+    echo "✓ CPU virtualization support detected"
+else
+    echo "✗ CPU virtualization not supported. Please enable in BIOS."
+    exit 1
+fi
 
-# ------------------------------------------------------
-# Enable services
-# ------------------------------------------------------
-sudo systemctl enable libvirtd
-sudo systemctl start libvirtd
+# Install QEMU/KVM packages
+echo "Installing QEMU/KVM packages..."
+pacman -S --noconfirm \
+    qemu-full \
+    virt-manager \
+    virt-viewer \
+    dnsmasq \
+    vde2 \
+    bridge-utils \
+    openbsd-netcat \
+    ebtables \
+    iptables \
+    libguestfs
 
-# ------------------------------------------------------
-# Edit qemu.conf
-# ------------------------------------------------------
-echo "Manual steps required:"
-echo "Open sudo vim /etc/libvirt/qemu.conf"
-echo "Uncomment and add your user name to user and group."
-echo 'user = "your username"'
-echo 'group = "your username"'
-read -p "Press any key to open qemu.conf: " c
-sudo vim /etc/libvirt/qemu.conf
+# Install AUR packages with paru (if available)
+if command -v paru &> /dev/null; then
+    echo "Installing AUR packages..."
+    sudo -u $(logname) paru -S --noconfirm \
+        qemu-emulators-full \
+        virtio-win \
+        swtpm
+fi
 
-# ------------------------------------------------------
-# Restart Services
-# ------------------------------------------------------
-sudo systemctl restart libvirtd
+# Enable and start services
+echo "Configuring services..."
+systemctl enable libvirtd.service
+systemctl start libvirtd.service
+systemctl enable virtlogd.socket
+systemctl start virtlogd.socket
 
-# ------------------------------------------------------
-# Autostart Network
-# ------------------------------------------------------
-sudo virsh net-autostart default
+# Configure libvirt
+echo "Configuring libvirt..."
+usermod -a -G libvirt $(logname)
+sed -i 's/#unix_sock_group = "libvirt"/unix_sock_group = "libvirt"/' /etc/libvirt/libvirtd.conf
+sed -i 's/#unix_sock_rw_perms = "0770"/unix_sock_rw_perms = "0770"/' /etc/libvirt/libvirtd.conf
 
-echo "Please restart your system with reboot."
+# Restart libvirt service
+systemctl restart libvirtd.service
 
+# Configure networking
+echo "Setting up virtual networking..."
+virsh net-autostart default 2>/dev/null || true
+virsh net-start default 2>/dev/null || true
+
+# Install additional useful tools
+echo "Installing additional tools..."
+pacman -S --noconfirm \
+    spice-vdagent \
+    spice-gtk \
+    dmidecode
+
+# Create directory for VM storage
+mkdir -p /home/$(logname)/VMs
+chown $(logname):$(logname) /home/$(logname)/VMs
+
+# Verification
+echo "Verifying installation..."
+if systemctl is-active --quiet libvirtd; then
+    echo "✓ libvirtd service is running"
+else
+    echo "✗ libvirtd service is not running"
+fi
+
+if virsh --connect qemu:///system list > /dev/null 2>&1; then
+    echo "✓ libvirt is properly configured"
+else
+    echo "✗ libvirt configuration issue detected"
+fi
+
+echo ""
+echo "=== QEMU/KVM Installation Complete ==="
+echo "Important notes:"
+echo "1. Log out and log back in for group changes to take effect"
+echo "2. Use 'virt-manager' for GUI management"
+echo "3. VM storage directory: /home/$(logname)/VMs"
+echo "4. Check if KVM is available: egrep -c '(vmx|svm)' /proc/cpuinfo"
+echo "5. Test with: virsh --connect qemu:///system list"
