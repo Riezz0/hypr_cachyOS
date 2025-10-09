@@ -85,6 +85,12 @@ paru -Syyu --noconfirm
 flatpak --noninteractive update
 
 #-----Oh-My-Zsh-----#
+echo "Installing Fonts"
+mkdir -p ~/.local/share/fonts
+cp -r /home/$USER/dots/fonts/* /home/$USER/.local/share/fonts
+fc-cache -fv 
+
+#-----Oh-My-Zsh-----#
 echo "Installing Oh-My-Zsh"
 sleep 3
 git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "/home/$USER/dots/tmp/zsh-autosuggestions/"
