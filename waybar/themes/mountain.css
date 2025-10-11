@@ -44,9 +44,121 @@ window#waybar {
   border-radius: 5px;
 }
 
+#apps2 {
+  background-color: @bg;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
+#apps3 {
+  background-color: @bg;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
+#apps4 {
+  background-color: @bg;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
+#apps5 {
+  background-color: @bg;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
 #custom-drawer1{
         font-size: 15px;
         background-image: url('icons/app.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-drawer2{
+        font-size: 15px;
+        background-image: url('icons/gpu.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-drawer3{
+        font-size: 15px;
+        background-image: url('icons/cpu.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-drawer4{
+        font-size: 15px;
+        background-image: url('icons/lan.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-drawer5{
+        font-size: 15px;
+        background-image: url('icons/switch.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-shutdown{
+        font-size: 15px;
+        background-image: url('icons/power.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-restart{
+        font-size: 15px;
+        background-image: url('icons/restart.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
+#custom-lock{
+        font-size: 15px;
+        background-image: url('icons/lock.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: 30px;
@@ -108,6 +220,18 @@ window#waybar {
 #custom-protonm{
         font-size: 15px;
         background-image: url('icons/protonmail.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        border-radius: 5px;
+}
+
+#custom-gmail{
+        font-size: 15px;
+        background-image: url('icons/gmail.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: 30px;

@@ -1,0 +1,49 @@
+//Grouped-Apps1///////////////////////////////////////////////////////////////////////////////////////////|
+{"group/apps": {"orientation": "inherit",                                                            /////|
+"drawer": {"transition-duration": 300, "transition-left-to-right": false,                            /////|
+"children-class": "drawer-modules"},                                                                 /////|
+"modules": ["custom/drawer1","custom/themer", "custom/browser","custom/discord","custom/whatsapp",   /////|
+"custom/protonm","custom/gmail"],},                                                                  /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Drawer1/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/drawer1": {"format": "    ", "tooltip": true},                                               /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Themer//////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/themer": {"format": "    ", "tooltip": false,                                                /////|
+"on-click": "bash ~/.config/scripts/themer.sh", "tooltip": true,                                     /////|
+"tooltip-format": "Set Theme\nLeft Click To Open\nLeft Click Again To Close" },                      /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Browser/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/browser": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/browser.sh", "tooltip": true,                                    /////|
+"tooltip-format": "Browser\nLeft Click To Open\nLeft Click Again To Close" },                        /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Discord/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/discord": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/dc.sh", "tooltip": true,                                         /////|
+"tooltip-format": "Discord\nLeft Click To Open\nLeft Click Again To Close" },                        /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//WhatsApp////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/whatsapp": {"format": "    ", "tooltip": false,                                              /////|
+"on-click": "bash ~/.config/scripts/wa.sh", "tooltip": true,                                         /////|
+"tooltip-format": "WhatsApp\nLeft Click To Open\nLeft Click Again To Close" },                       /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//ProtonMail//////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/protonm": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/mail.sh", "tooltip": true,                                       /////|
+"tooltip-format": "Proton Mail\nLeft Click To Open\nLeft Click Again To Close" },                    /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//GMail///////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/gmail": {"format": "    ", "tooltip": false,                                                 /////|
+"on-click": "bash ~/.config/scripts/gmail.sh", "tooltip": true,                                      /////|
+"tooltip-format": "G-Mail\nLeft Click To Open\nLeft Click Again To Close" }},                        /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+
