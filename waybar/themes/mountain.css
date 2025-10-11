@@ -36,6 +36,67 @@ window#waybar {
   border-radius: 5px;
 }
 
+#custom-themer{
+        font-size: 15px;
+        background-image: url('icons/wallpaper.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 130px;
+}
+
+#custom-browser{
+        font-size: 15px;
+        background-image: url('icons/brave.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+
+}
+
+#custom-discord{
+        font-size: 15px;
+        background-image: url('icons/discord.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: -2px;
+        border-radius: 5px;
+}
+
+#custom-whatsapp{
+        font-size: 15px;
+        background-image: url('icons/whatsapp.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        border-radius: 5px;
+}
+
+#custom-protonm{
+        font-size: 15px;
+        background-image: url('icons/protonmail.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        border-radius: 5px;
+}
+
 #workspaces {
     border-radius: 5px;
     background-color: @bg;

@@ -44,6 +44,7 @@ paru -S --needed --noconfirm \
 	xfce4-settings \
   xfce-polkit \
 	exa \
+  libreoffice-fresh \
 	rofi-wayland \
   neovim \
   goverlay-git \

@@ -1,23 +1,23 @@
-//General Settings///////////////////////////////////////////////////////////////////////////////////////|
-{"height": 30, "spacing": 4,                                                                        /////|  
-"output": "DP-1",                                                                                 /////|
-"margin-top": 5,                                                                                    /////|
-"margin-left": 4,                                                                                   /////|
-"margin-right": 5,                                                                                  /////|
-/////////////////////////////////////////////////////////////////////////////////////////////////////////|
+//General Settings////////////////////////////////////////////////////////////////////////////////////////|
+{"height": 30, "spacing": 4,                                                                         /////|  
+"output": "DP-1",                                                                                    /////|
+"margin-top": 5,                                                                                     /////|
+"margin-left": 4,                                                                                    /////|
+"margin-right": 5,                                                                                   /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
-//Modules Alignment//////////////////////////////////////////////////////////////////////////////////////|
-"modules-left": ["custom/arch","hyprland/workspaces","custom/aur"],                                 /////|
-"modules-center": ["custom/quran","custom/salaat","custom/sunnah"],                                 /////|
-"modules-right": ["custom/cpu","custom/gpu","pulseaudio","network","clock","tray","custom/power"],  /////|
-/////////////////////////////////////////////////////////////////////////////////////////////////////////|
+//Modules Alignment///////////////////////////////////////////////////////////////////////////////////////|
+"modules-left": ["custom/arch","hyprland/workspaces","custom/aur","custom/themer","custom/browser",  /////|
+"custom/discord","custom/whatsapp","custom/protonm"],                                                                  /////|
+"modules-center": ["custom/quran","custom/salaat","custom/sunnah"],                                  /////|
+"modules-right": ["custom/cpu","custom/gpu","pulseaudio","network","clock","tray","custom/power"],   /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
-//Arch-Logo//////////////////////////////////////////////////////////////////////////////////////////////|
-"custom/arch": {"format": "<span font='20px'>󰣇</span>", "tooltip": true,                            /////|
-"on-click": "bash ~/.config/scripts/binds.sh","tooltip-format":                                     /////|
-"Check Binds\nLeft Click To Open\nLeft Click Again To Close"} ,                                     /////|
-                                                                                                    /////|
-/////////////////////////////////////////////////////////////////////////////////////////////////////////|
+//Arch-Logo///////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/arch": {"format": "<span font='20px'>󰣇</span>", "tooltip": true,                             /////|
+"on-click": "bash ~/.config/scripts/binds.sh","tooltip-format":                                      /////|
+"Check Binds\nLeft Click To Open\nLeft Click Again To Close"} ,                                      /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
 //Workspaces//////////////////////////////////////////////////////////////////////////////////////////////|
 "hyprland/workspaces": {                                                                             /////| 
@@ -69,6 +69,42 @@
 "custom/power": {"format": "<span font='20px'>󰐦</span>", "tooltip": false,                           /////|
 "on-click": "bash ~/.config/scripts/power.sh", "tooltip": true,                                      /////|
 "tooltip-format": "Power-Menu\nLeft Click To Open\nLeft Click Again To Close" },                     /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Themer//////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/themer": {"format": "    ", "tooltip": false,                                                /////|
+"on-click": "bash ~/.config/scripts/themer.sh", "tooltip": true,                                     /////|
+"tooltip-format": "Set Theme\nLeft Click To Open\nLeft Click Again To Close" },                      /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Discord/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/discord": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/dc.sh", "tooltip": true,                                         /////|
+"tooltip-format": "Discord\nLeft Click To Open\nLeft Click Again To Close" },                        /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//WhatsApp////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/whatsapp": {"format": "    ", "tooltip": false,                                              /////|
+"on-click": "bash ~/.config/scripts/wa.sh", "tooltip": true,                                         /////|
+"tooltip-format": "WhatsApp\nLeft Click To Open\nLeft Click Again To Close" },                       /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//ProtonMail//////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/protonm": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/mail.sh", "tooltip": true,                                       /////|
+"tooltip-format": "Proton Mail\nLeft Click To Open\nLeft Click Again To Close" },                    /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//ProtonMail//////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/gmail": {"format": "    ", "tooltip": false,                                                 /////|
+"on-click": "bash ~/.config/scripts/gmail.sh", "tooltip": true,                                      /////|
+"tooltip-format": "G-Mail\nLeft Click To Open\nLeft Click Again To Close" },                    /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Browser/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/browser": {"format": "    ", "tooltip": false,                                               /////|
+"on-click": "bash ~/.config/scripts/browser.sh", "tooltip": true,                                    /////|
+"tooltip-format": "Browser\nLeft Click To Open\nLeft Click Again To Close" },                        /////|
 //////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
 //Clock///////////////////////////////////////////////////////////////////////////////////////////////////|
