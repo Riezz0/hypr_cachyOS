@@ -4,13 +4,25 @@
 "margin-top": 5,                                                                                     /////|
 "margin-left": 4,                                                                                    /////|
 "margin-right": 5,                                                                                   /////|
+"include": ["$XDG_CONFIG_HOME/waybar/modules/includes.json"],
 //////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
 //Modules Alignment///////////////////////////////////////////////////////////////////////////////////////|
-"modules-left": ["custom/arch","hyprland/workspaces","custom/aur","custom/themer","custom/browser",  /////|
-"custom/discord","custom/whatsapp","custom/protonm"],                                                                  /////|
+"modules-left": ["custom/arch","hyprland/workspaces","custom/aur","group/apps"],                     /////|
 "modules-center": ["custom/quran","custom/salaat","custom/sunnah"],                                  /////|
 "modules-right": ["custom/cpu","custom/gpu","pulseaudio","network","clock","tray","custom/power"],   /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//App-Drawer//////////////////////////////////////////////////////////////////////////////////////////////|
+"group/apps": {"orientation": "inherit",                                                             /////|
+"drawer": {"transition-duration": 300, "transition-left-to-right": false,                            /////|
+"children-class": "drawer-modules"},                                                                 /////|
+"modules": ["custom/drawer1","custom/themer", "custom/browser","custom/discord","custom/whatsapp",   /////|
+"custom/protonm"],},                                                                                 /////|
+//////////////////////////////////////////////////////////////////////////////////////////////////////////|
+
+//Drawer1/////////////////////////////////////////////////////////////////////////////////////////////////|
+"custom/drawer1": {"format": "    ", "tooltip": true},                                               /////|
 //////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
 //Arch-Logo///////////////////////////////////////////////////////////////////////////////////////////////|

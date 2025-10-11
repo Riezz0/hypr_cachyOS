@@ -35,6 +35,26 @@ window#waybar {
   border-radius: 5px;
 }
 
+#apps {
+  background-color: @bg;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom: 5px solid @color2; 
+  border-radius: 5px;
+}
+
+#custom-drawer1{
+        font-size: 15px;
+        background-image: url('icons/app.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30px;
+        padding-top: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+}
+
 #custom-themer{
         font-size: 15px;
         background-image: url('icons/wallpaper.png');
@@ -44,7 +64,7 @@ window#waybar {
         padding-top: 0px;
         padding-right: 0px;
         padding-left: 0px;
-        margin-left: 130px;
+        margin-left: 0px;
 }
 
 #custom-browser{
