@@ -70,7 +70,8 @@ paru -Rns --noconfirm mako
 
 print_status "Installing AUR packages..."
 paru -S --needed --noconfirm \
-  swww dunst sddm-theme-sugar-candy-git hypridle hyprlock hyprpicker \
+  swww dunst qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects \
+  hypridle hyprlock hyprpicker \
   swaync wl-clipboard brave vscodium nemo nwg-look gnome-disk-utility \
   nwg-displays zsh ttf-meslo-nerd ttf-font-awesome ttf-font-awesome-4 \
   ttf-font-awesome-5 waybar rust cargo fastfetch cmatrix pavucontrol \
