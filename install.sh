@@ -182,7 +182,7 @@ cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
 #------Reboot-----#
-dunst --config ~/.config/dunst/dunstrc
+dunst --config ~/.config/dunst/dunstrc &
 sleep 2
 dunstify "Installation Complete, Rebooting Your PC"
 sleep 3
