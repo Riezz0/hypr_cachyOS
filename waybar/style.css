@@ -5,17 +5,16 @@
     font-family: MesloLGL Nerd Font Propo;
     font-size: 13px;
 }
-
 /*----------Color Definitions----------*/
-@define-color fg #C1C5C5;
-@define-color bg #0A1718;
-@define-color color1 #546B54;
-@define-color color2 #044B44;
-@define-color color3 #077467;
-@define-color color4 #06655B;
-@define-color color5 #05A07E;
-@define-color color6 #708F71;
-@define-color color7 #596D6D;
+@define-color fg #C4C1C1;
+@define-color bg #0D0B0C;
+@define-color color1 #810102;
+@define-color color2 #9B0001;
+@define-color color3 #A32E2F;
+@define-color color4 #CF0102;
+@define-color color5 #196000;
+@define-color color6 #478033;
+@define-color color7 #3D3C3D;
 /*-------------------------------------*/
 
 window#waybar {
@@ -252,7 +251,7 @@ window#waybar {
 
 #workspaces button {
   background-color: transparent;
-  color: @color2; 
+  color: @color1; 
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 5px;
@@ -270,7 +269,7 @@ window#waybar {
 
 #workspaces button.urgent {
   background-color: transparent;
-  color: @color1; 
+  color: @color4; 
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 5px;
@@ -353,7 +352,7 @@ window#waybar {
 
 #pulseaudio.muted {
   background-color: @bg;
-  color: @color1;
+  color: @color5;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 5px;
@@ -374,7 +373,7 @@ window#waybar {
 
 #network.disconnected {
   background-color: @bg;
-  color: @color1;
+  color: @color5;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 5px;

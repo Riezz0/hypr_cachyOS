@@ -30,6 +30,10 @@ class WallpaperSwitcher(Gtk.Window):
         self.rofi_themes_dir = os.path.join(self.home_dir, ".config", "rofi", "themes")
         self.rofi_colors = os.path.join(self.home_dir, ".config", "rofi", "launcher", "colors.rasi")
         
+        # Dunst paths
+        self.dunst_themes_dir = os.path.join(self.home_dir, ".config", "dunst", "themes")
+        self.dunst_config = os.path.join(self.home_dir, ".config", "dunst", "dunstrc")
+        
         # GTK-4.0 paths
         self.gtk4_config_dir = os.path.join(self.home_dir, ".config", "gtk-4.0")
         self.gtk4_config_file = os.path.join(self.gtk4_config_dir, "gtk.css")
@@ -123,12 +127,14 @@ class WallpaperSwitcher(Gtk.Window):
             waybar_theme = os.path.join(self.waybar_themes_dir, f"{name_without_ext}.css")
             hyprland_theme = os.path.join(self.hyprland_themes_dir, f"{name_without_ext}.conf")
             rofi_theme = os.path.join(self.rofi_themes_dir, f"{name_without_ext}.rasi")
+            dunst_theme = os.path.join(self.dunst_themes_dir, f"{name_without_ext}")
             
             # Check if any themes are available
             has_themes = any([
                 os.path.exists(waybar_theme),
                 os.path.exists(hyprland_theme),
-                os.path.exists(rofi_theme)
+                os.path.exists(rofi_theme),
+                os.path.exists(dunst_theme)
             ])
             
             # Create label - only show name without extension
@@ -162,6 +168,7 @@ class WallpaperSwitcher(Gtk.Window):
             frame.waybar_theme = waybar_theme
             frame.hyprland_theme = hyprland_theme
             frame.rofi_theme = rofi_theme
+            frame.dunst_theme = dunst_theme
             frame.name_without_ext = name_without_ext
             
             # Add to flowbox
@@ -224,6 +231,46 @@ class WallpaperSwitcher(Gtk.Window):
                 return False
         except Exception as e:
             print(f"Error applying Rofi theme: {e}")
+            return False
+
+    def apply_dunst_theme(self, dunst_theme_path, wallpaper_name):
+        """Apply Dunst theme by copying to dunstrc"""
+        try:
+            if os.path.exists(dunst_theme_path):
+                print(f"Applying Dunst theme: {dunst_theme_path}")
+                # Ensure dunst directory exists
+                os.makedirs(os.path.dirname(self.dunst_config), exist_ok=True)
+                shutil.copy2(dunst_theme_path, self.dunst_config)
+                print(f"Dunst theme applied successfully to {self.dunst_config}")
+                return True
+            else:
+                print(f"Dunst theme not found: {dunst_theme_path}")
+                return False
+        except Exception as e:
+            print(f"Error applying Dunst theme: {e}")
+            return False
+
+    def restart_dunst(self):
+        """Restart Dunst to apply new theme and send notification"""
+        try:
+            print("Restarting Dunst...")
+            # Kill existing dunst processes
+            subprocess.run(['killall', 'dunst'], capture_output=True)
+            # Start dunst with new config
+            subprocess.Popen(['dunst', '--config', self.dunst_config], 
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print("Dunst restarted successfully")
+            
+            # Wait a moment for dunst to fully start
+            import time
+            time.sleep(1)
+            
+            # Send notification
+            subprocess.run(['dunstify', 'Theme Applied'], check=True)
+            print("Notification sent: Theme Applied")
+            return True
+        except Exception as e:
+            print(f"Error restarting Dunst: {e}")
             return False
 
     def apply_gtk4_theme(self, theme_name):
@@ -319,6 +366,7 @@ class WallpaperSwitcher(Gtk.Window):
         waybar_theme = frame.waybar_theme
         hyprland_theme = frame.hyprland_theme
         rofi_theme = frame.rofi_theme
+        dunst_theme = frame.dunst_theme
         name_without_ext = frame.name_without_ext
         
         print(f"\n=== Applying themes for: {name_without_ext} ===")
@@ -339,6 +387,9 @@ class WallpaperSwitcher(Gtk.Window):
             
             # Apply Rofi theme
             rofi_success = self.apply_rofi_theme(rofi_theme, name_without_ext)
+            
+            # Apply Dunst theme
+            dunst_success = self.apply_dunst_theme(dunst_theme, name_without_ext)
             
             # Apply GTK-4.0 theme
             gtk4_success = self.apply_gtk4_theme(theme_name)
@@ -367,6 +418,10 @@ class WallpaperSwitcher(Gtk.Window):
             # Reload Hyprland if theme was applied successfully
             if hyprland_success:
                 self.reload_hyprland()
+            
+            # Restart Dunst if theme was applied successfully
+            if dunst_success:
+                self.restart_dunst()
             
             print("=== Theme application completed ===\n")
             
