@@ -10,8 +10,8 @@ echo "Installing AUR Packages"
 sleep 3
 paru -S --needed --noconfirm \
   swww \
-  hyprshot \
   dunst \
+  sddm-theme-sugar-candy-git \
 	hypridle \
 	hyprlock \
 	hyprpicker \
@@ -124,6 +124,7 @@ echo "Removing Confliciting Files"
 rm -rf /home/$USER/dots/tmp/
 rm -rf /home/$USER/.config/hypr
 rm -rf /home/$USER/.config/kitty
+sudo rm /etc/sddm.conf
 rm -rf ~/.zshrc
 
 #-----Config-Symlink-----#
@@ -168,21 +169,12 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
+
 #-----Apply-SDDM-Theme-----#
 echo "Applying SDDM Theme"
 sleep 2
-sudo rm /etc/sddm.conf
 sudo cp -r /home/$USER/dots/sys/sddm/sddm.conf /etc/
 sudo cp -r /home/$USER/dots/sys/sddm/Cachy-OS-SDDM/ /usr/share/sddm/themes/
-
-#-----Install-GRUB-Theme-----#
-
-echo "Installing GRUB Themes"
-sleep 1
-cd /home/$USER/git/
-git clone https://github.com/RomjanHossain/Grub-Themes.git
-cd /home/$USER/git/Grub-Themes/
-sudo bash install.sh
 
 #------Reboot-----#
 dunst --config ~/.config/dunst/dunstrc &
