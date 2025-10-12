@@ -142,7 +142,7 @@ ln -s /home/$USER/dots/scripts/ /home/$USER/.config/
 ln -s /home/$USER/dots/waybar/ /home/$USER/.config/
 ln -s /home/$USER/dots/.icons/ /home/$USER/
 ln -s /home/$USER/dots/.themes/ /home/$USER/
-ln -s /home/$USER/dots/dunst /home/$USER/.config/
+ln -s /home/$USER/dots/dunst/ /home/$USER/.config/
 
 echo "Symlinking Sys Configs"
 sleep 3
@@ -182,7 +182,8 @@ cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
 #------Reboot-----#
-dunst --config ~/.config/dunst/dunstrc &
+dunst --config ~/.config/dunst/dunstrc
+sleep 2
 dunstify "Installation Complete, Rebooting Your PC"
 sleep 3
 sudo systemctl reboot
