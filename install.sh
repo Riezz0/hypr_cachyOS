@@ -80,6 +80,13 @@ paru -S --needed --noconfirm \
   rofi-wayland neovim goverlay-git flatpak python-pywal16 python-pywalfox \
   make linux-firmware dkms base-devel coolercontrol automake linux-headers
 
+print_status "Installing Flatpaks..."
+flatpak install --noninteractive flathub org.audacityteam.Audacity 
+flatpak install --noninteractive flathub org.libretro.RetroArch
+flatpak install --noninteractive flathub net.rpcs3.RPCS3
+flatpak install --noninteractive flathub org.localsend.localsend_app
+flatpak install --noninteractive flathub com.github.tchx84.Flatseal
+
 echo -e "${CYAN}${ICON_FOLDER} Directory Setup${NC}"
 print_status "Creating necessary directories..."
 mkdir -p ~/git ~/venv /home/$USER/tmp/
@@ -184,6 +191,11 @@ echo -e "${CYAN}${ICON_THEME} Login Manager Setup${NC}"
 print_status "Applying SDDM theme..."
 sudo cp -r /home/$USER/dots/sys/sddm/sddm.conf /etc/
 sudo cp -r /home/$USER/dots/sys/sddm/Cachy-OS-SDDM/ /usr/share/sddm/themes/
+
+echo -e "${CYAN}${ICON_THEME} Cooler Control Services${NC}"
+print_status "Staring Cooler Control Services..."
+sudo systemctl enable coolercontrold.service
+sudo systemctl start coolercontrold.service
 
 echo -e "${CYAN}${ICON_THEME} Bootloader Setup${NC}"
 print_status "Applying GRUB theme..."
