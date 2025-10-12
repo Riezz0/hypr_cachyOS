@@ -125,6 +125,7 @@ rm -rf /home/$USER/dots/tmp/
 rm -rf /home/$USER/.config/hypr
 rm -rf /home/$USER/.config/kitty
 sudo rm /etc/sddm.conf
+sudo rm /etc/default/grub
 rm -rf ~/.zshrc
 
 #-----Config-Symlink-----#
@@ -176,8 +177,13 @@ sleep 2
 sudo cp -r /home/$USER/dots/sys/sddm/sddm.conf /etc/
 sudo cp -r /home/$USER/dots/sys/sddm/Cachy-OS-SDDM/ /usr/share/sddm/themes/
 
+#-----Apply-GRUB-Theme-----#
+echo "Applying GRUB Theme"
+sleep 2
+sudo cp -r /home/$USER/dots/sys/grub/grub /etc/default/
+sudo cp -r /home/$USER/dots/sys/grub/Matrices-circle-window /usr/share/grub/themes/
+
 #------Reboot-----#
-dunst --config ~/.config/dunst/dunstrc &
 sleep 2
 dunstify "Installation Complete, Rebooting Your PC"
 sleep 3
