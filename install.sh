@@ -168,9 +168,12 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
-#-----Instal-SDDM-Theme-----#
-echo "Install SDDM Themes"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
+#-----Apply-SDDM-Theme-----#
+echo "Applying SDDM Theme"
+sleep 2
+sudo rm /etc/sddm.conf
+sudo cp -r /home/$USER/dots/sys/sddm/sddm.conf /etc/
+sudo cp -r /home/$USER/dots/sys/sddm/Cachy-OS-SDDM/ /usr/share/sddm/themes/
 
 #-----Install-GRUB-Theme-----#
 
