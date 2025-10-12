@@ -182,7 +182,7 @@ echo "Applying GRUB Theme"
 sleep 2
 sudo cp -r /home/$USER/dots/sys/grub/grub /etc/default/
 sudo cp -r /home/$USER/dots/sys/grub/Matrices-circle-window /usr/share/grub/themes/
-sudo sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 #------Reboot-----#
 sleep 2
