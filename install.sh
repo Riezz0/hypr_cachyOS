@@ -66,7 +66,7 @@ paru -Syyu --noconfirm
 
 echo -e "${CYAN}${ICON_PACKAGE} Package Management${NC}"
 print_status "Uninstalling unwanted packages..."
-paru -Rns mako
+paru -Rns --noconfirm mako
 
 print_status "Installing AUR packages..."
 paru -S --needed --noconfirm \
