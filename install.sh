@@ -20,7 +20,6 @@ ICON_REBOOT="🔄"
 ICON_WARNING="⚠️"
 ICON_ERROR="❌"
 ICON_INFO="ℹ️"
-ICON_FLATPAK="📦"
 
 # Function to print status messages
 print_status() {
@@ -52,20 +51,6 @@ confirm_action() {
     esac
 }
 
-# Function to install Flatpaks
-install_flatpaks() {
-    echo -e "${CYAN}${ICON_FLATPAK} Flatpak Installation${NC}"
-    print_status "Installing Flatpaks..."
-    
-    flatpak install --noninteractive flathub org.audacityteam.Audacity 
-    flatpak install --noninteractive flathub org.libretro.RetroArch
-    flatpak install --noninteractive flathub net.rpcs3.RPCS3
-    flatpak install --noninteractive flathub org.localsend.localsend_app
-    flatpak install --noninteractive flathub com.github.tchx84.Flatseal
-    
-    print_success "Flatpaks installed successfully!"
-}
-
 # Main installation script
 echo -e "${LIGHT_CYAN}🚀 Starting System Installation Script...${NC}"
 echo -e "${CYAN}${ICON_INFO} This script will install and configure your system${NC}\n"
@@ -84,7 +69,7 @@ print_status "Uninstalling unwanted packages..."
 paru -Rns mako
 
 print_status "Installing AUR packages..."
-paru -S --needed --nocomfirm \
+paru -S --needed --noconfirm \
   swww dunst sddm-theme-sugar-candy-git hypridle hyprlock hyprpicker \
   swaync wl-clipboard brave vscodium nemo nwg-look gnome-disk-utility \
   nwg-displays zsh ttf-meslo-nerd ttf-font-awesome ttf-font-awesome-4 \
@@ -94,14 +79,6 @@ paru -S --needed --nocomfirm \
   python-gobject xfce4-settings xfce-polkit exa libreoffice-fresh \
   rofi-wayland neovim goverlay-git flatpak python-pywal16 python-pywalfox \
   make linux-firmware dkms base-devel coolercontrol automake linux-headers
-
-# Flatpak installation option
-echo -e "${CYAN}${ICON_FLATPAK} Flatpak Options${NC}"
-if confirm_action "Do you want to install the Flatpak applications?"; then
-    install_flatpaks
-else
-    echo -e "${YELLOW}${ICON_INFO} Skipping Flatpak installation.${NC}"
-fi
 
 echo -e "${CYAN}${ICON_FOLDER} Directory Setup${NC}"
 print_status "Creating necessary directories..."
@@ -217,7 +194,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 echo -e "${CYAN}${ICON_REBOOT} Final Steps${NC}"
 print_success "Installation complete!"
 print_status "Sending notification and preparing for reboot..."
-dunstify "Installation Complete, Rebooting Your PC"
+dunstify "Installation Complete, Please Reboot Your PC"
 
 if confirm_action "Do you want to reboot now?"; then
     echo -e "${GREEN}${ICON_REBOOT} Rebooting system...${NC}"
