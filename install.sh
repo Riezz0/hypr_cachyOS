@@ -4,12 +4,14 @@ sleep 3
 paru -Syyu --noconfirm
 
 #-----AUR-----#
+echo "Uninstalling Unwanted Packages"
+paru -Rns mako
 echo "Installing AUR Packages"
 sleep 3
-
 paru -S --needed --noconfirm \
   swww \
   hyprshot \
+  dunst \
 	hypridle \
 	hyprlock \
 	hyprpicker \
@@ -166,7 +168,6 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
-dunst --config ~/.config/dunst/dunstrc &
 #-----Instal-SDDM-Theme-----#
 echo "Install SDDM Themes"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
@@ -181,6 +182,7 @@ cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
 #------Reboot-----#
+dunst --config ~/.config/dunst/dunstrc &
 dunstify "Installation Complete, Rebooting Your PC"
 sleep 3
 sudo systemctl reboot
