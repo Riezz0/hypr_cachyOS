@@ -103,7 +103,12 @@ git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USE
 git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/tmp/fast-syntax-highlighting/"
 git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/tmp/zsh-autocomplete/"
 git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/tmp/autoswitch_virtualenv/"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+
+print_status "Installing Oh My Zsh (will auto-exit)..."
+# Install Oh My Zsh with unattended mode and auto-exit
+RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+print_status "Changing default shell to zsh..."
 chsh -s $(which zsh)
 
 print_status "Configuring Zsh plugins..."
