@@ -99,11 +99,7 @@ git clone "https://github.com/zsh-users/zsh-syntax-highlighting.git" "/home/$USE
 git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "/home/$USER/dots/tmp/fast-syntax-highlighting/"
 git clone --depth 1 -- "https://github.com/marlonrichert/zsh-autocomplete.git" "/home/$USER/dots/tmp/zsh-autocomplete/"
 git clone "https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv.git" "/home/$USER/dots/tmp/autoswitch_virtualenv/"
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
-
-# Install Oh My Zsh and change default shell
-echo "Installing Oh My Zsh and changing default shell to zsh..."
-CHSH=yes RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 chsh -s $(which zsh)
 echo "OMZ Installation complete! Default shell changed to zsh."
 cp -r /home/$USER/dots/tmp/autoswitch_virtualenv/ ~/.oh-my-zsh/custom/plugins/
@@ -144,6 +140,7 @@ ln -s /home/$USER/dots/scripts/ /home/$USER/.config/
 ln -s /home/$USER/dots/waybar/ /home/$USER/.config/
 ln -s /home/$USER/dots/.icons/ /home/$USER/
 ln -s /home/$USER/dots/.themes/ /home/$USER/
+ln -s /home/$USER/dots/dunst /home/$USER/.config/
 
 echo "Symlinking Sys Configs"
 sleep 3
@@ -157,6 +154,7 @@ sleep 3
 cp -r /home/$USER/.config/waybar/themes/cachydepths5k.css /home/$USER/.config/waybar/style.css
 cp -r /home/$USER/.config/hypr/themes/cachydepths5k.conf /home/$USER/.config/hypr/colors.conf
 cp -r /home/$USER/.config/rofi/themes/cachydepths5k.rasi /home/$USER/.config/rofi/launcher/colors.rasi
+cp -r /home/$USER/.config/dunst/themes/cachydepths5k /home/$USER/.config/dunst/dunstrc
 gsettings set org.gnome.desktop.interface cursor-theme "Future-black-cursors"
 gsettings set org.gnome.desktop.interface icon-theme "oomox-cachydepths5k"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-cachydepths5k"
@@ -168,7 +166,7 @@ cp -r ~/.config/hypr/bg/cachydepths5k.jpg ~/.config/hypr/bg/bg.jpg
 swww-daemon 2>/dev/null &
 swww img ~/.config/hypr/bg/bg.jpg 2>/dev/null &
 wal -i ~/.config/hypr/bg/bg.jpg --cols16
-
+dunst --config ~/.config/dunst/dunstrc &
 #-----Instal-SDDM-Theme-----#
 echo "Install SDDM Themes"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/keyitdev/sddm-astronaut-theme/master/setup.sh)"
@@ -183,7 +181,6 @@ cd /home/$USER/git/Grub-Themes/
 sudo bash install.sh
 
 #------Reboot-----#
-echo "Installation Complete !!!"
-echo "Rebooting The System"
-sleep 1
+dunstify "Installation Complete, Rebooting Your PC"
+sleep 3
 sudo systemctl reboot
